@@ -31,6 +31,7 @@ def build_session(config: ResyConfig) -> Session:
         "X-origin": "https://resy.com",
         "Referrer": "https://resy.com/",
         "Accept": "application/json, text/plain, */*",
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
     }
 
     session.headers.update(headers)
