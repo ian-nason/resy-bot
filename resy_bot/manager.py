@@ -1,3 +1,4 @@
+import time
 from datetime import datetime, timedelta
 
 from resy_bot.logging import logging
@@ -93,6 +94,7 @@ class ResyManager:
                 logger.info(
                     f"no slots, retrying; currently {datetime.now().isoformat()}"
                 )
+                time.sleep(self.retry_config.seconds_between_retries)
 
         raise ExhaustedRetriesError(
             f"Retried {self.retry_config.n_retries} times, " "without finding a slot"
