@@ -67,6 +67,26 @@ class TimedReservationRequest(BaseModel):
     notifications: Optional[NotificationsConfig] = None
 
 
+class WatchlistEntry(BaseModel):
+    name: Optional[str] = None
+    reservation_request: ReservationRequest
+    expected_drop_hour: int
+    expected_drop_minute: int
+    notifications: Optional[NotificationsConfig] = None
+
+    def to_timed_request(self) -> TimedReservationRequest:
+        return TimedReservationRequest(
+            reservation_request=self.reservation_request,
+            expected_drop_hour=self.expected_drop_hour,
+            expected_drop_minute=self.expected_drop_minute,
+            notifications=self.notifications,
+        )
+
+
+class Watchlist(BaseModel):
+    venues: List[WatchlistEntry]
+
+
 class AuthRequestBody(BaseModel):
     email: str
     password: str

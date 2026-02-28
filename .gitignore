@@ -138,3 +138,6 @@ credentials.json
 
 # logs
 logs/
+
+# watchlist config
+watchlist.json

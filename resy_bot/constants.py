@@ -11,3 +11,4 @@ class ResyEndpoints(Enum):
     DETAILS = "/3/details"
     BOOK = "/3/book"
     PASSWORD_AUTH = "/3/auth/password"
+    VENUE_SEARCH = "/3/venuesearch/search"

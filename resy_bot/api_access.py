@@ -48,8 +48,34 @@ class ResyApiAccess:
     def __init__(self, session: Session):
         self.session = session
 
-    def find_venue(self):
-        pass
+    def search_venues(self, query: str) -> List[Dict]:
+        search_url = RESY_BASE_URL + ResyEndpoints.VENUE_SEARCH.value
+
+        resp = self.session.post(
+            search_url,
+            json={"query": query},
+            headers={"Content-Type": "application/json"},
+        )
+
+        if not resp.ok:
+            raise HTTPError(
+                f"Venue search failed: {resp.status_code}, {resp.text}"
+            )
+
+        data = resp.json()
+        hits = data.get("search", {}).get("hits", [])
+
+        return [
+            {
+                "venue_id": hit.get("id", {}).get("resy"),
+                "name": hit.get("name"),
+                "region": hit.get("region"),
+                "locality": hit.get("locality"),
+                "neighborhood": hit.get("neighborhood"),
+                "cuisine": ", ".join(hit.get("cuisine", [])),
+            }
+            for hit in hits
+        ]
 
     def auth(self, body: AuthRequestBody) -> AuthResponseBody:
         auth_url = RESY_BASE_URL + ResyEndpoints.PASSWORD_AUTH.value
