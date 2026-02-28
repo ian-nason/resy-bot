@@ -4,12 +4,18 @@ from datetime import datetime, date, timedelta
 from pydantic import BaseModel, validator, root_validator
 
 
+class NotificationsConfig(BaseModel):
+    enabled: bool
+    email: str
+
+
 class ResyConfig(BaseModel):
     api_key: str
     token: str
     payment_method_id: int
     email: str
     password: str
+    gmail_app_password: Optional[str] = None
 
     def get_authorization(self) -> str:
         return f'ResyAPI api_key="{self.api_key}"'
@@ -58,6 +64,7 @@ class TimedReservationRequest(BaseModel):
     reservation_request: ReservationRequest
     expected_drop_hour: int
     expected_drop_minute: int
+    notifications: Optional[NotificationsConfig] = None
 
 
 class AuthRequestBody(BaseModel):
