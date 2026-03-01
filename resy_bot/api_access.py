@@ -3,6 +3,7 @@ from requests import Session, HTTPError
 from typing import Dict, List
 
 from resy_bot.constants import RESY_BASE_URL, ResyEndpoints
+from resy_bot.errors import ResyServerError
 from resy_bot.logging import logging
 from resy_bot.models import (
     ResyConfig,
@@ -101,6 +102,11 @@ class ResyApiAccess:
         resp = self.session.get(find_url, params=params.dict())
 
         logger.info(f"{datetime.now().isoformat()} Received response for ")
+
+        if resp.status_code == 500:
+            raise ResyServerError(
+                f"Server error from Resy API: {resp.status_code}, {resp.text}"
+            )
 
         if not resp.ok:
             raise HTTPError(

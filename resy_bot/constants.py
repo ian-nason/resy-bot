@@ -2,8 +2,10 @@ from enum import Enum
 
 
 RESY_BASE_URL = "https://api.resy.com"
-N_RETRIES = 10
-SECONDS_TO_WAIT_BETWEEN_RETRIES = 1.0
+N_RETRIES = 20
+SECONDS_TO_WAIT_BETWEEN_RETRIES = 0.3
+EARLY_START_SECONDS = 2
+SERVER_ERROR_RETRY_WAIT = 2.0
 
 
 class ResyEndpoints(Enum):

@@ -4,3 +4,7 @@ class NoSlotsError(Exception):
 
 class ExhaustedRetriesError(Exception):
     pass
+
+
+class ResyServerError(Exception):
+    pass

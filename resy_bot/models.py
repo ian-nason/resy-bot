@@ -31,6 +31,8 @@ class ReservationRequest(BaseModel):
     preferred_type: Optional[str]
     ideal_date: Optional[date]
     days_in_advance: Optional[int]
+    fallback_party_sizes: Optional[List[int]] = None
+    date_range: Optional[int] = None
 
     @root_validator
     def validate_target_date(cls, data: Dict) -> Dict:
